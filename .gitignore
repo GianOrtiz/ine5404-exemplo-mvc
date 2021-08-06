@@ -1,2 +1,6 @@
 # Cache de execução do python
 __pycache__
+
+# Arquivos de armazenamento
+usuarios.json
+produtos.json
