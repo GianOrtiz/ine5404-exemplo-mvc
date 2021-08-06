@@ -1,6 +1,7 @@
 from app.produto.repositorio import RepositorioProduto
+from app.modelo import Modelo
 
-class Produto:
+class Produto(Modelo):
 
     # Referência estática do repositório.
     __repositorio: RepositorioProduto = RepositorioProduto()
@@ -35,6 +36,10 @@ class Produto:
         self.__codigo = codigo
         self.__valor = valor
         self.__quantidade = quantidade
+
+    @property
+    def identificador(self) -> str:
+        return self.__codigo
 
     @property
     def nome(self) -> str:
@@ -131,3 +136,10 @@ class Produto:
     def atualiza_produto(self):
         """Atualiza as informações deste produto"""
         Produto.__repositorio.atualiza(self)
+
+    def __str__(self):
+        return '{0} - {1} | R$ {2} | Quantidade: {3}'.format(
+            self.__codigo, self.__nome, self.__valor, self.__quantidade)
+    
+    def __repr__(self):
+        return self.__str__()
