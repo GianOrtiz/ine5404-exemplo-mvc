@@ -26,10 +26,14 @@ class Produto:
         if not isinstance(quantidade, int):
             raise ValueError('quantidade deve ser do tipo int')
 
-        self.__nome = nome
         self.__codigo = codigo
+        self.__nome = nome
         self.__valor = valor
         self.__quantidade = quantidade
+
+    @property
+    def codigo(self) -> str:
+        return self.__codigo
 
     @property
     def nome(self) -> str:
@@ -40,10 +44,6 @@ class Produto:
         if not isinstance(nome, str):
             raise ValueError('nome deve ser do tipo str')
         self.__nome = nome
-
-    @property
-    def codigo(self) -> str:
-        return self.__codigo
     
     @property
     def valor(self) -> float:
@@ -68,6 +68,6 @@ class Produto:
     def __str__(self):
         return '{0} - {1} | R$ {2} | Quantidade: {3}'.format(
             self.__codigo, self.__nome, self.__valor, self.__quantidade)
-    
+
     def __repr__(self):
         return self.__str__()

@@ -27,7 +27,7 @@ class Controlador:
         Produto
             Produto criado
         """
-        produto = Produto(codigo, nome, valor, quantidade)
+        produto = Produto(codigo=codigo, nome=nome, valor=valor, quantidade=quantidade)
         self.__dao.add(codigo, produto)
         return produto
 
@@ -82,3 +82,14 @@ class Controlador:
             produto.quantidade = quantidade
         self.__dao.remove(codigo)
         self.__dao.add(codigo, produto)
+
+    def produtos(self) -> List[Produto]:
+        """Obtem todos os produtos
+        
+        Returns
+        -------
+        list
+            A lista de produtos
+        """
+        produtos = self.__dao.get_all()
+        return produtos

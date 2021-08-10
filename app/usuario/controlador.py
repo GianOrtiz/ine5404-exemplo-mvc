@@ -12,7 +12,7 @@ class Controlador:
         usuarios = self.__dao.get_all()
         if len(usuarios) == 0:
             self.__dao.add('default', Usuario('default', 'default'))
-    
+
     def cria_usuario(self, nome: str, senha: str) -> Usuario:
         """Cria um novo usuário no sistema
 
@@ -72,3 +72,15 @@ class Controlador:
             self.__dao.remove(nome)
             usuario.senha = senha
             self.__dao.add(nome, usuario)
+
+    def login(self, nome: str, senha: str) -> str:
+        """Realiza o login de um usuário"""
+        if nome == '' or senha == '':
+            return 'Nome e senha são obrigatórios'
+
+        usuario = self.obtem_usuario(nome)    
+        if usuario is not None:
+            senha_igual = usuario.compara_senha(senha)
+            if senha_igual:
+                return ''
+        return 'Nome ou senha incorretos'

@@ -79,8 +79,8 @@ class DAO(ABC):
             A chave única do objeto
         """
         try:
-            self.__cache.remove(key)
-            self.__dump
+            self.__cache.pop(key)
+            self.__dump()
         except:
             pass
 
