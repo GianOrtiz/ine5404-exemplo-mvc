@@ -1,14 +1,17 @@
 from typing import List
 
 from app.usuario.usuario import Usuario
+from app.usuario.dao import DAOUsuario
 
 class Controlador:
 
     def __init__(self):
-        self.__usuarios: List[Usuario] = Usuario.obtem_usuarios()
+        self.__dao = DAOUsuario()
+
         # Se os usuários estiverem vazio, cria o usuário padrão
-        if len(self.__usuarios) == 0:
-            self.__usuarios.append(Usuario.cria_usuario('default', 'default'))
+        usuarios = self.__dao.get_all()
+        if len(usuarios) == 0:
+            self.__dao.add('default', Usuario('default', 'default'))
     
     def cria_usuario(self, nome: str, senha: str) -> Usuario:
         """Cria um novo usuário no sistema
@@ -25,8 +28,8 @@ class Controlador:
         Usuario
             Usuário criado
         """
-        usuario = Usuario.cria_usuario(nome, senha)
-        self.__usuarios.append(usuario)
+        usuario = Usuario(nome, senha)
+        self.__dao.add(nome, usuario)
         return usuario
         
     def obtem_usuario(self, nome: str) -> Usuario:
@@ -42,11 +45,8 @@ class Controlador:
         Usuario
             O usuário selecionado
         """
-        for usuario in self.__usuarios:
-            if usuario.nome == nome:
-                return usuario
-        return None        
-    
+        return self.__dao.get(nome)
+
     def remove_usuario(self, nome: str):
         """Remove um usuário
 
@@ -55,11 +55,7 @@ class Controlador:
         nome : str
             Nome do usuário para remover
         """
-        for usuario in self.__usuarios:
-            if usuario.nome == nome:
-                usuario.remove_usuario()
-                self.__usuarios.remove(usuario)
-                return
+        self.__dao.remove(nome)
 
     def atualiza_usuario(self, nome: str, senha: str):
         """Atualiza as informações de um usuário
@@ -71,7 +67,8 @@ class Controlador:
         senha : str
             Nova senha do usuário
         """
-        for usuario in self.__usuarios:
-            if usuario.nome == nome:
-                usuario.senha = senha
-                usuario.atualiza_usuario()
+        usuario = self.__dao.get(nome)
+        if usuario is not None:
+            self.__dao.remove(nome)
+            usuario.senha = senha
+            self.__dao.add(nome, usuario)

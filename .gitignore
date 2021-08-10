@@ -3,4 +3,6 @@ __pycache__
 
 # Arquivos de armazenamento
 usuarios.json
+usuarios.pkl
 produtos.json
+produtos.pkl

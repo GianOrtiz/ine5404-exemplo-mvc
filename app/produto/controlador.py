@@ -1,11 +1,12 @@
 from typing import List
 
 from app.produto.produto import Produto
+from app.produto.dao import DAOProduto
 
 class Controlador:
 
     def __init__(self):
-        self.__produtos: List[Produto] = Produto.obtem_produtos()
+        self.__dao = DAOProduto()
         
     def cria_produto(self, codigo: str, nome: str, valor: float, quantidade: int) -> Produto:
         """Cria um novo produto no sistema. Se o código já existir, não cria
@@ -26,13 +27,10 @@ class Controlador:
         Produto
             Produto criado
         """
-        for produto in self.__produtos:
-            if produto.codigo == codigo:
-                return produto
-        produto = Produto.cria_produto(codigo, nome, valor, quantidade)
-        self.__produtos.append(produto)
+        produto = Produto(codigo, nome, valor, quantidade)
+        self.__dao.add(codigo, produto)
         return produto
-        
+
     def obtem_produto(self, codigo: str) -> Produto:
         """Retorna os produto
 
@@ -46,10 +44,7 @@ class Controlador:
         Produto
             O produto selecionado
         """
-        for produto in self.__produtos:
-            if produto.codigo == codigo:
-                return produto
-        return None
+        return self.__dao.get(codigo)
     
     def remove_produto(self, codigo: str):
         """Remove um produto
@@ -59,11 +54,7 @@ class Controlador:
         codigo : str
             Código do produto
         """
-        for produto in self.__produtos:
-            if produto.codigo == codigo:
-                produto.remove_produto()
-                self.__produtos.remove(produto)
-                return
+        return self.__dao.remove(codigo)
 
     def atualiza_produto(self, codigo: str, nome: str=None, valor: float=None, quantidade: int=None):
         """Atualiza as informações de um produto
@@ -79,12 +70,15 @@ class Controlador:
         quantidade : int
             Nova quantidade do produto
         """
-        for produto in self.__produtos:
-            if produto.codigo == codigo:
-                if nome is not None:
-                    produto.nome = nome
-                if valor is not None:
-                    produto.valor = valor
-                if quantidade is not None:
-                    produto.quantidade = quantidade
-                produto.atualiza_produto()
+        produto = self.__dao.get(codigo)
+        if produto is None:
+            return
+    
+        if nome is not None:
+            produto.nome = nome
+        if valor is not None:
+            produto.valor = valor
+        if quantidade is not None:
+            produto.quantidade = quantidade
+        self.__dao.remove(codigo)
+        self.__dao.add(codigo, produto)
