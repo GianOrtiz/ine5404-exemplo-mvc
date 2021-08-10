@@ -1,0 +1,16 @@
+{% if produtos %}
+    <div>
+    {% for produto in produtos %}
+        <div>
+            <h2>{{ produto.nome }}</h2>
+            <p>Código:      {{ produto.codigo }}</p>
+            <p>Valor(R$):   {{ produto.valor }}</p>
+            <p>Quantidade:  {{ produto.quantidade }}</p>
+            <a href='/products/{{produto.pk}}/update'>Editar</a>
+            <a href='/products/{{produto.pk}}/delete'>Remover</a>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>Não existem produtos registrados ainda.</p>
+{% endif %}

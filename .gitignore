@@ -6,3 +6,6 @@ usuarios.json
 usuarios.pkl
 produtos.json
 produtos.pkl
+
+# Django SQLite3 database
+db.sqlite3
