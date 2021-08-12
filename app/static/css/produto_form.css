@@ -1,0 +1,16 @@
+.center {
+    margin: 25%;
+}
+
+#form .center {
+    text-align: center;
+}
+  
+#from .form {
+    max-width: 300px;
+    margin: 35px auto;
+}
+  
+#form .form-form{
+    padding:0px 25px;
+}

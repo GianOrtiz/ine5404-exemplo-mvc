@@ -18,6 +18,7 @@ class StockView(LoginRequiredMixin, generic.ListView):
 class ProductCreateView(generic.CreateView):
     model = Produto
     fields = ['codigo', 'nome', 'valor', 'quantidade']
+    success_url = "/"
 
 class ProdutDetailView(generic.DetailView):
     model = Produto
@@ -29,7 +30,3 @@ class ProductDeleteView(generic.DeleteView):
 class ProductUpdateView(generic.UpdateView):
     model = Produto
     fields = ['codigo', 'nome', 'valor', 'quantidade']
-
-# CreateProductView
-
-# EditProductView

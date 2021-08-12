@@ -1,16 +1,38 @@
-{% if produtos %}
-    <div>
-    {% for produto in produtos %}
-        <div>
-            <h2>{{ produto.nome }}</h2>
-            <p>Código:      {{ produto.codigo }}</p>
-            <p>Valor(R$):   {{ produto.valor }}</p>
-            <p>Quantidade:  {{ produto.quantidade }}</p>
-            <a href='/products/{{produto.pk}}/update'>Editar</a>
-            <a href='/products/{{produto.pk}}/delete'>Remover</a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <title>Controle de Estoque</title>
+    </head>
+    <body>
+        <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/products/add">Adicionar</a>
+            </li>
+        </ul>
+        <div class="products-list">
+            {% if produtos %}
+            {% for produto in produtos %}
+            <div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    <p class="card-text">Código: {{ produto.codigo }}</p>
+                    <p class="card-text">Valor(R$): {{ produto.valor }}</p>
+                    <p class="card-text">Quantidade: {{ produto.quantidade }}</p>
+                    <a href="/products/{{ produto.pk }}/update" class="btn btn-primary">Editar</a>
+                    <a href="/products/{{ produto.pk }}/delete" class="btn btn-primary">Remover</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>Não existem produtos registrados ainda.</p>
+            {% endif %}
         </div>
-    {% endfor %}
-    </div>
-{% else %}
-    <p>Não existem produtos registrados ainda.</p>
-{% endif %}
+    </body>
+</html>
