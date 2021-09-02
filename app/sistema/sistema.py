@@ -1,5 +1,6 @@
 from typing import List, Callable
 
+from app.usuario.dao import DAOUsuario
 from app.usuario.usuario import Usuario
 from app.estoque.estoque import Estoque
 from app.util import nao_eh_vazio
@@ -8,9 +9,11 @@ class Sistema:
     
     def __init__(self):
         self.__estoque = Estoque()
-        self.__usuarios: List[Usuario] = [
-            Usuario('default', 'default'),
-        ]
+        self.__usuario_dao = DAOUsuario()
+        try:
+            self.__usuario_dao.get('default')
+        except:
+            self.__usuario_dao.add('default', Usuario('default', 'default'))
         self.__autenticado = False
 
     @property
@@ -21,7 +24,7 @@ class Sistema:
         """Realiza o login de um usuário"""
         nome = self.__le_string('Nome do usuário:\n', nao_eh_vazio)
         senha = self.__le_string('Senha do usuário:\n', nao_eh_vazio)
-        for usuario in self.__usuarios:
+        for usuario in self.__usuario_dao.get_all():
             if usuario.nome == nome:
                 if usuario.compara_senha(senha):
                     self.__autenticado = True
@@ -77,7 +80,7 @@ class Sistema:
     def cria_usuario(self):
         """Cria um novo usuário"""
         def usuario_existe(nome: str) -> bool:
-            for usuario in self.__usuarios:
+            for usuario in self.__usuario_dao.get_all():
                 if usuario.nome == nome:
                     return True
             return False
@@ -87,7 +90,7 @@ class Sistema:
             nome = self.__le_string('Usuário já existe, tente outro nome:\n', nao_eh_vazio)
 
         senha = self.__le_string('Senha do usuário:\n', nao_eh_vazio)
-        self.__usuarios.append(Usuario(nome, senha))
+        self.__usuario_dao.add(nome, Usuario(nome, senha))
 
     def __le_string(self, descricao: str, validacao: Callable[[str], bool]) -> str:
         """Le uma string por input validando a entrada
