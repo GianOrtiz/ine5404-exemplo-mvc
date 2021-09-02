@@ -16,18 +16,14 @@ def main():
     print('------------------\n')
     while True:
         if sistema.autenticado:
-            resposta = input(
-                '''
-                Escolha uma das opções:
-
-                0 - Sair
-                1 - Consultar produto por código
-                2 - Criar um novo produto
-                3 - Remove unidades de produto
-                4 - Adicionar unidades de produto
-                5 - Criar um novo usuário
-                '''
-            )
+            print('Escolha uma das opções:\n')
+            print('0 - Sair')
+            print('1 - Consultar produto por código')
+            print('2 - Criar um novo produto')
+            print('3 - Remove unidades de produto')
+            print('4 - Adicionar unidades de produto')
+            print('5 - Criar um novo usuário\n')
+            resposta = input()
             if resposta == '0':
                 break
             elif resposta in opcoes:

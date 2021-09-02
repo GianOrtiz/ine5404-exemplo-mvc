@@ -58,3 +58,10 @@ class Produto:
         if not isinstance(quantidade, int):
             raise ValueError('quantidade deve ser do tipo int')
         self.__quantidade = quantidade
+
+    def __str__(self) -> str:
+        return '{0} - {1} | R$ {2} | Unidades: {3}'.format(
+            self.__codigo, self.__nome, self.__valor, self.__quantidade)
+
+    def __repr__(self) -> str:
+        return self.__str__()
