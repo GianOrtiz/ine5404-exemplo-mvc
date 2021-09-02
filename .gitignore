@@ -1,2 +1,5 @@
 # Cache de execução do python
 __pycache__
+
+# Armazenamento dos produtos
+produtos.pkl
