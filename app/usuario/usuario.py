@@ -1,3 +1,5 @@
+from hashlib import blake2b
+
 class Usuario:
 
     def __init__(self, nome: str, senha: str):
@@ -17,7 +19,7 @@ class Usuario:
             raise ValueError('senha deve ser do tipo str')
 
         self.__nome = nome
-        self.__senha = senha
+        self.__senha = blake2b(bytes(senha, 'utf-8')).hexdigest()
 
     @property
     def nome(self) -> str:
@@ -37,7 +39,7 @@ class Usuario:
     def senha(self, senha: str):
         if not isinstance(senha, str):
             raise ValueError('senha deve ser do tipo str')
-        self.__senha = senha
+        self.__senha = blake2b(bytes(senha, 'utf-8')).hexdigest()
 
     def compara_senha(self, senha: str) -> bool:
         """Compara a senha dada com a senha do usuário.
@@ -52,7 +54,7 @@ class Usuario:
         bool
             Retorna True se senhas são iguais ou False caso contrário
         """
-        return self.__senha == senha
+        return self.__senha == blake2b(bytes(senha, 'utf-8')).hexdigest()
 
     def __str__(self) -> str:
         return 'Usuário - {0}'.format(self.__nome)
