@@ -1,3 +1,5 @@
+import PySimpleGUI as sg
+
 from typing import List
 
 from app.produto.produto import Produto
@@ -5,8 +7,9 @@ from app.produto.dao import DAOProduto
 
 class Controlador:
 
-    def __init__(self):
+    def __init__(self, apresentacao):
         self.__dao = DAOProduto()
+        self.__apresentacao = apresentacao
         
     def cria_produto(self, codigo: str, nome: str, valor: float, quantidade: int) -> Produto:
         """Cria um novo produto no sistema. Se o código já existir, não cria
@@ -93,3 +96,65 @@ class Controlador:
         """
         produtos = self.__dao.get_all()
         return produtos
+
+    def le_eventos(self):
+        """
+        Lê os eventos da tela e reage de acordo, abrindo e usando CRUD para
+        as operações.
+        """
+
+        self.__apresentacao.tela_produtos()
+
+        rodando = True
+        while rodando:
+            event, values = self.__apresentacao.window.read()
+            if event == sg.WIN_CLOSED:
+                rodando = False
+            elif isinstance(event, str):
+                event_values = event.split('-')
+                tipo_evento = event_values[0]
+                if len(event_values) > 1:
+                    codigo_produto = event_values[1]
+
+                if tipo_evento == 'edit':
+                    # Inicia a edição de um produto.
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.tela_edicao(codigo_produto)
+
+                elif tipo_evento == 'remove':
+                    # Remove um produto do estoque.
+                    self.remove_produto(codigo_produto)
+                    self.__apresentacao.tela_produtos()
+
+                elif tipo_evento == 'save':
+                    # Salva os novos valores de um produto.
+                    self.atualiza_produto(
+                        codigo=codigo_produto,
+                        nome=values['nome'],
+                        valor=float(values['valor']),
+                        quantidade=int(values['quantidade']))
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.tela_produtos()
+
+                elif tipo_evento == 'cancel':
+                    # Cancela a ação que estava sendo feita.
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.tela_produtos()
+
+                elif tipo_evento == 'add':
+                    # Inicia a adição de um produto.
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.tela_adicionar()
+
+                elif tipo_evento == 'create':
+                    # Cria um novo produto.
+                    self.cria_produto(
+                        codigo=values['codigo'],
+                        nome=values['nome'],
+                        valor=float(values['valor']),
+                        quantidade=int(values['quantidade']),
+                    )
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.tela_produtos()
+
+        self.__apresentacao.window.close()
