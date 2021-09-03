@@ -35,7 +35,7 @@ class ApresentacaoProduto:
                 elif tipo_evento == 'remove':
                     # Remove um produto do estoque.
                     self.__controlador.remove_produto(codigo_produto)
-                    self.__window[codigo_produto].update(visible=False)
+                    self.tela_produtos()
 
                 elif tipo_evento == 'save':
                     # Salva os novos valores de um produto.
@@ -93,9 +93,12 @@ class ApresentacaoProduto:
                 ),
             )
         produtos_frames.append(linha)
-            
+
+        self.__window.close()
         self.__container = [[sg.Button('Adicionar Produto', key='add')], produtos_frames]
-        self.__window = sg.Window('Produtos', self.__container, font=('Arial', 12), size=(800, 600))
+        new_window = sg.Window('Produtos', self.__container, font=('Arial', 12), size=(800, 600))
+        self.__window = new_window
+        # self.__window = sg.Window('Produtos', self.__container, font=('Arial', 12), size=(800, 600))
 
     def tela_edicao(self, codigo: str):
         """Permite que o usuário edite um produto"""
