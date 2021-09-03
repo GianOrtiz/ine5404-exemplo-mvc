@@ -1,3 +1,5 @@
+import PySimpleGUI as sg
+
 from typing import List
 
 from app.usuario.usuario import Usuario
@@ -5,8 +7,9 @@ from app.usuario.dao import DAOUsuario
 
 class Controlador:
 
-    def __init__(self):
+    def __init__(self, apresentacao):
         self.__dao = DAOUsuario()
+        self.__apresentacao = apresentacao
 
         # Se os usuários estiverem vazio, cria o usuário padrão
         usuarios = self.__dao.get_all()
@@ -84,3 +87,32 @@ class Controlador:
             if senha_igual:
                 return ''
         return 'Nome ou senha incorretos'
+
+    def le_eventos(self):
+        """
+        Lê os eventos da tela e reage de acordo, abrindo e usando CRUD para
+        as operações.
+        """
+    
+        self.__apresentacao.login()
+
+        rodando = True
+        resultado = ''
+        while rodando:
+            event, values = self.__apresentacao.window.read()
+            if event == sg.WIN_CLOSED:
+                rodando = False
+            elif event == 'Login':
+                resposta = self.login(values['nome'], values['senha'])
+                if resposta == '':
+                    resultado = ''
+                    rodando = False
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.apresentacao_produto.inicia()
+                else:
+                    resultado = resposta
+
+            if resultado != '':
+                sg.popup('RESULTADO: ', resultado)
+
+        self.__apresentacao.window.close()
