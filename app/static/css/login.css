@@ -5,8 +5,28 @@
 #login .login {
     max-width: 300px;
     margin: 35px auto;
+    padding: 4%;
+    border-radius: 4%;
+    box-shadow: 0px 0px 4px gray;
 }
-  
+
 #login .login-form{
     padding:0px 25px;
+}
+
+.control-group input {
+    margin-bottom: 4%;
+    width: 100%;
+}
+
+.control-group .btn {
+    margin-top: 8%;
+}
+
+.fullscreen-center {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

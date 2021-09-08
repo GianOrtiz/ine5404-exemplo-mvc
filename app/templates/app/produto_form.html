@@ -9,17 +9,19 @@
         <title>Produto | Controle de Estoque</title>
     </head>
     <body>
-        <div id="form" class="container">
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="form well well-small center">
-                        <form method="post">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="control-group">
-                                <input class="btn btn-primary btn-large btn-block" type="submit" value="Salvar">
-                            </div>
-                        </form>
+        <div class="fullscreen-center">
+            <div id="form" class="container">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="form well well-small center">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="control-group">
+                                    <input class="btn btn-primary btn-large btn-block" type="submit" value="Salvar">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

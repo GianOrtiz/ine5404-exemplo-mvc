@@ -9,24 +9,26 @@
         <title>Login | Controle de Estoque</title>
     </head>
     <body>
-        <div id="login" class="container">
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="login well well-small">
-                        <form action="" class="login-form" id="UserLoginForm" method="post" accept-charset="utf-8">
-                            {% csrf_token %}
-                            <div class="control-group"> 
-                                <label for="name">Nome</label>
-                                <input name="username" required="required" placeholder="Nome de usuário" type="text" id="Username"> 
-                            </div>
-                            <div class="control-group">
-                                <label for="password">Senha</label>
-                                <input name="password" required="required" placeholder="Senha" maxlength="255" type="password" id="UserPassword">
-                            </div>
-                            <div class="control-group">
-                                <input class="btn btn-primary btn-large btn-block" type="submit" value="Entrar"> 
-                            </div>
-                        </form>
+        <div class="fullscreen-center">
+            <div id="login" class="container">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="login well well-small">
+                            <form action="" class="login-form" id="UserLoginForm" method="post" accept-charset="utf-8">
+                                {% csrf_token %}
+                                <div class="control-group"> 
+                                    <label for="name">Nome</label>
+                                    <input name="username" required="required" placeholder="Nome de usuário" type="text" id="Username"> 
+                                </div>
+                                <div class="control-group">
+                                    <label for="password">Senha</label>
+                                    <input name="password" required="required" placeholder="Senha" maxlength="255" type="password" id="UserPassword">
+                                </div>
+                                <div class="control-group">
+                                    <input class="btn btn-primary btn-large btn-block" type="submit" value="Entrar"> 
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,10 @@ from django.urls import reverse
 # Create your models here.
 class Produto(models.Model):
     nome = models.CharField(max_length=128)
-    codigo = models.CharField(max_length=64)
+    codigo = models.CharField(
+        max_length=64,
+        unique=True,
+        error_messages={'unique': 'Código já está em uso por outro produto'})
     valor = models.FloatField()
     quantidade = models.IntegerField()
 

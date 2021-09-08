@@ -19,6 +19,9 @@ class ProductCreateView(generic.CreateView):
     model = Produto
     fields = ['codigo', 'nome', 'valor', 'quantidade']
     success_url = "/"
+    error_messages = {
+        'unique': 'Código já está em uso por outro produto.'
+    }
 
 class ProdutDetailView(generic.DetailView):
     model = Produto
@@ -30,3 +33,4 @@ class ProductDeleteView(generic.DeleteView):
 class ProductUpdateView(generic.UpdateView):
     model = Produto
     fields = ['codigo', 'nome', 'valor', 'quantidade']
+    success_url = "/"
