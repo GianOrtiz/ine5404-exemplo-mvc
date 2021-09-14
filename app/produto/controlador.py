@@ -156,5 +156,10 @@ class Controlador:
                     )
                     self.__apresentacao.window.close()
                     self.__apresentacao.tela_produtos()
+                
+                elif tipo_evento == 'createuser':
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.apresentacao_usuario.inicia('CRIA')
+                    rodando = False
 
         self.__apresentacao.window.close()

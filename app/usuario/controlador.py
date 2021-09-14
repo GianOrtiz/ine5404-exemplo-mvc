@@ -88,13 +88,16 @@ class Controlador:
                 return ''
         return 'Nome ou senha incorretos'
 
-    def le_eventos(self):
+    def le_eventos(self, tela_inicial = 'LOGIN'):
         """
         Lê os eventos da tela e reage de acordo, abrindo e usando CRUD para
         as operações.
         """
     
-        self.__apresentacao.login()
+        if tela_inicial == 'LOGIN':
+            self.__apresentacao.login()
+        else:
+            self.__apresentacao.cria_usuario()
 
         rodando = True
         resultado = ''
@@ -111,6 +114,18 @@ class Controlador:
                     self.__apresentacao.apresentacao_produto.inicia()
                 else:
                     resultado = resposta
+            elif event == 'Criar':
+                try:
+                    self.cria_usuario(values['nome'], values['senha'])
+                    resultado = ''
+                    rodando = False
+                    self.__apresentacao.window.close()
+                    self.__apresentacao.apresentacao_produto.inicia()
+                except:
+                    resultado = 'Nome ou senha já utilizado'
+            elif event == 'Cancelar':
+                self.__apresentacao.window.close()
+                self.__apresentacao.apresentacao_produto.inicia()
 
             if resultado != '':
                 sg.popup('RESULTADO: ', resultado)

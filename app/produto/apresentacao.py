@@ -7,10 +7,16 @@ PRODUTOS_POR_LINHA = 4
 
 class ApresentacaoProduto:
 
-    def __init__(self):
+    def __init__(self, apresentacao_usuario):
         self.__controlador = Controlador(self)
         self.__container = []
-        self.__window = sg.Window('Estoque', self.__container, font=('Arial', 12))
+        self.__apresentacao_usuario = apresentacao_usuario
+        self.__window = sg.Window(
+            'Estoque', self.__container, font=('Arial', 12))
+
+    @property
+    def apresentacao_usuario(self):
+        return self.__apresentacao_usuario
 
     @property
     def window(self) -> sg.Window:
@@ -45,7 +51,13 @@ class ApresentacaoProduto:
         produtos_frames.append(linha)
 
         self.__window.close()
-        self.__container = [[sg.Button('Adicionar Produto', key='add')], produtos_frames]
+        self.__container = [
+            [
+                sg.Button('Adicionar Produto', key='add'),
+                sg.Button('Criar Usuário', key='createuser')
+            ],
+            produtos_frames,
+        ]
         new_window = sg.Window('Produtos', self.__container, font=('Arial', 12), size=(800, 600))
         self.__window = new_window
 
